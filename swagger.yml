@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  title: Clean Architecture with Node and TypeScript API
+  version: 0.0.1
+servers:
+  - url: http://localhost:3000/api
+    description: localhost
+paths:
+  /tasks:
+    get:
+      summary: Get all tasks.
+      description: Get all tasks.
+      operationId: getTasks
+      responses:
+        '200':
+          description: Get all tasks.
+    post:
+      summary: Create task.
+      description: Create task.
+      operationId: createTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Create Task.
+  /tasks/{id}:
+    get:
+      summary: Get task with id.
+      description: Get task with id.
+      operationId: getTask
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Get all tasks.
+    patch:
+      summary: Update task.
+      description: Update task.
+      operationId: updateTask
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            $ref: '#/components/requestBodies/Task'
+      responses:
+        '200':
+          description: Update task.
+    delete:
+      summary: Delete task with id.
+      description: Delete task with id.
+      operationId: deleteTask
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            $ref: '#/components/requestBodies/Task'
+      responses:
+        '200':
+          description: Delete task with id.
+
+components:
+  requestBodies:
+    Task:
+      description: A JSON object containing Task information
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+  schemas:
+    Task:
+      type: object
+      required:
+        - id
+        - title
+        - description
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
